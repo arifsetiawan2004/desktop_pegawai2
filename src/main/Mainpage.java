@@ -82,6 +82,11 @@ public class Mainpage extends javax.swing.JFrame {
 
         bt_edit.setText("Edit Data");
         bt_edit.setEnabled(false);
+        bt_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_editActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -123,6 +128,11 @@ public class Mainpage extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tabelDataPegawai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelDataPegawaiMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tabelDataPegawai);
@@ -169,8 +179,41 @@ public class Mainpage extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void bt_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_refreshActionPerformed
+        bt_edit.setEnabled(false);
         showData();
     }//GEN-LAST:event_bt_refreshActionPerformed
+
+    private void tabelDataPegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelDataPegawaiMouseClicked
+        int baris = tabelDataPegawai.getSelectedRow();
+        if (baris != -1){
+            bt_edit.setEnabled(true);
+        }
+        else {
+            bt_edit.setEnabled(false);
+        }
+    }//GEN-LAST:event_tabelDataPegawaiMouseClicked
+
+    private void bt_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_editActionPerformed
+       int baris = tabelDataPegawai.getSelectedRow();
+        if (baris != -1){
+            String id = tabelDataPegawai.getValueAt(baris, 0).toString();
+            String nip = tabelDataPegawai.getValueAt(baris, 1).toString();
+            String nama = tabelDataPegawai.getValueAt(baris, 2).toString();
+            String alamat = tabelDataPegawai.getValueAt(baris, 3).toString();
+            String hp = tabelDataPegawai.getValueAt(baris, 4).toString();
+            
+            EditPegawai EP = new EditPegawai(this,true);
+            EP.setId(id);
+            EP.setNip(nip);
+            EP.setNama(nama);
+            EP.setAlamat(alamat);
+            EP.setHp(hp);
+            EP.setVisible(true);            
+        }
+        else {
+            bt_edit.setEnabled(false);
+        }
+    }//GEN-LAST:event_bt_editActionPerformed
 
     /**
      * @param args the command line arguments

@@ -16,7 +16,7 @@ public class Koneksi {
             mds.setPortNumber(3306); 
             mds.setServerTimezone("Asia/Jakarta");
             koneksi = mds.getConnection();
-            System.out.println("Terhubung");
+//            System.out.println("Terhubung");
             return koneksi;
             
         } catch (SQLException e) {
