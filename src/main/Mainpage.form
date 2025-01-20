@@ -84,9 +84,11 @@
                           <Component id="jButton1" min="-2" pref="142" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="bt_edit" min="-2" pref="102" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="bt_hapus" min="-2" pref="111" max="-2" attributes="0"/>
+                          <EmptySpace pref="230" max="32767" attributes="0"/>
                           <Component id="bt_refresh" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="313" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -98,6 +100,7 @@
                               <Component id="jButton1" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="bt_refresh" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="bt_edit" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="bt_hapus" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="14" max="32767" attributes="0"/>
                       </Group>
@@ -128,6 +131,18 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_editActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="bt_hapus">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="33" green="33" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Hapus Data"/>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_hapusActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

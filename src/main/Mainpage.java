@@ -6,8 +6,11 @@ package main;
 
 import java.awt.Frame;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.sql.SQLException;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -42,6 +45,7 @@ public class Mainpage extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         bt_refresh = new javax.swing.JButton();
         bt_edit = new javax.swing.JButton();
+        bt_hapus = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelDataPegawai = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
@@ -88,6 +92,15 @@ public class Mainpage extends javax.swing.JFrame {
             }
         });
 
+        bt_hapus.setBackground(new java.awt.Color(255, 51, 51));
+        bt_hapus.setText("Hapus Data");
+        bt_hapus.setEnabled(false);
+        bt_hapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_hapusActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -97,9 +110,11 @@ public class Mainpage extends javax.swing.JFrame {
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bt_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
                 .addComponent(bt_refresh)
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,7 +123,8 @@ public class Mainpage extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bt_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bt_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bt_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -180,6 +196,7 @@ public class Mainpage extends javax.swing.JFrame {
 
     private void bt_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_refreshActionPerformed
         bt_edit.setEnabled(false);
+        bt_hapus.setEnabled(false);
         showData();
     }//GEN-LAST:event_bt_refreshActionPerformed
 
@@ -187,9 +204,11 @@ public class Mainpage extends javax.swing.JFrame {
         int baris = tabelDataPegawai.getSelectedRow();
         if (baris != -1){
             bt_edit.setEnabled(true);
+            bt_hapus.setEnabled(true);
         }
         else {
             bt_edit.setEnabled(false);
+            bt_hapus.setEnabled(false);
         }
     }//GEN-LAST:event_tabelDataPegawaiMouseClicked
 
@@ -214,6 +233,27 @@ public class Mainpage extends javax.swing.JFrame {
             bt_edit.setEnabled(false);
         }
     }//GEN-LAST:event_bt_editActionPerformed
+
+    private void bt_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_hapusActionPerformed
+        int baris = tabelDataPegawai.getSelectedRow();
+        if (baris != -1) {
+        String id = tabelDataPegawai.getValueAt(baris, 0).toString();
+        String nip = tabelDataPegawai.getValueAt(baris, 1).toString();
+        String nama = tabelDataPegawai.getValueAt(baris, 2).toString();
+        
+        int pilihan = JOptionPane.showConfirmDialog(this, 
+                "Apakah Anda yakin ingin menghapus data [" + nip + "] " + nama + "?", 
+                "Konfirmasi Hapus", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.QUESTION_MESSAGE);
+        
+        if (pilihan == JOptionPane.YES_OPTION) {
+            deleteData(id); // Panggil metode untuk menghapus data
+        }
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih data yang akan dihapus!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_bt_hapusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,6 +294,7 @@ public class Mainpage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_edit;
+    private javax.swing.JButton bt_hapus;
     private javax.swing.JButton bt_refresh;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
@@ -287,6 +328,27 @@ public class Mainpage extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             
+        }
+    }
+
+    private void deleteData(String id) {
+        try {
+            Connection K = Koneksi.sambungDB();
+            String Q = "DELETE FROM pegawai WHERE id = ?"; // Query hapus data
+            PreparedStatement PS = K.prepareStatement(Q);
+            PS.setString(1, id); // Set parameter ID
+
+            int confirm = PS.executeUpdate(); // Eksekusi query
+            if (confirm > 0) {
+                JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
+                showData(); // Refresh tabel
+            } else {
+                JOptionPane.showMessageDialog(this, "Gagal menghapus data!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            PS.close();
+            K.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
