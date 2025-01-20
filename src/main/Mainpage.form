@@ -86,8 +86,10 @@
                           <Component id="bt_edit" min="-2" pref="102" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="bt_hapus" min="-2" pref="111" max="-2" attributes="0"/>
-                          <EmptySpace pref="230" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="bt_refresh" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="121" max="32767" attributes="0"/>
+                          <Component id="bt_export" min="-2" pref="103" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -101,6 +103,7 @@
                               <Component id="bt_refresh" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="bt_edit" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="bt_hapus" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="bt_export" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="14" max="32767" attributes="0"/>
                       </Group>
@@ -143,6 +146,14 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_hapusActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="bt_export">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Export Data"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_exportActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

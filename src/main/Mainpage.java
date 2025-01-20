@@ -12,6 +12,14 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+
 
 
 /**
@@ -46,6 +54,7 @@ public class Mainpage extends javax.swing.JFrame {
         bt_refresh = new javax.swing.JButton();
         bt_edit = new javax.swing.JButton();
         bt_hapus = new javax.swing.JButton();
+        bt_export = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelDataPegawai = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
@@ -101,6 +110,13 @@ public class Mainpage extends javax.swing.JFrame {
             }
         });
 
+        bt_export.setText("Export Data");
+        bt_export.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_exportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -112,8 +128,10 @@ public class Mainpage extends javax.swing.JFrame {
                 .addComponent(bt_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_refresh)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
+                .addComponent(bt_export, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -124,7 +142,8 @@ public class Mainpage extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bt_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bt_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bt_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bt_export, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -255,6 +274,58 @@ public class Mainpage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bt_hapusActionPerformed
 
+    private void bt_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_exportActionPerformed
+        try {
+            // Membuka dialog JFileChooser untuk memilih lokasi penyimpanan file
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Pilih Lokasi Penyimpanan");
+        fileChooser.setSelectedFile(new java.io.File("DataPegawai.xlsx"));
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Excel Files", "xlsx"));
+        
+        // Menampilkan dialog dan mendapatkan status pilihan
+        int userSelection = fileChooser.showSaveDialog(this);
+        
+        if (userSelection != JFileChooser.APPROVE_OPTION) {
+            // Jika pengguna membatalkan atau menutup dialog
+            return;
+        }
+        
+        // Mendapatkan lokasi dan nama file yang dipilih pengguna
+        java.io.File fileToSave = fileChooser.getSelectedFile();
+        
+        org.apache.poi.ss.usermodel.Workbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook();
+        org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("Data Pegawai");
+        
+        // Buat header untuk kolom
+        org.apache.poi.ss.usermodel.Row headerRow = sheet.createRow(0);
+        String[] headers = {"NIP", "Nama Pegawai", "Alamat", "No. HP"};
+        for (int i = 0; i < headers.length; i++) {
+            org.apache.poi.ss.usermodel.Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+        }
+        
+        // Ambil data dari tabel dan isi ke file Excel
+        DefaultTableModel model = (DefaultTableModel) tabelDataPegawai.getModel();
+        for (int row = 0; row < model.getRowCount(); row++) {
+            org.apache.poi.ss.usermodel.Row dataRow = sheet.createRow(row + 1);
+            for (int col = 1; col < model.getColumnCount(); col++) {
+                org.apache.poi.ss.usermodel.Cell cell = dataRow.createCell(col -1);
+                cell.setCellValue(model.getValueAt(row, col).toString());
+            }
+        }
+        
+        // Simpan file Excel
+        java.io.FileOutputStream fileOut = new java.io.FileOutputStream(fileToSave);
+        workbook.write(fileOut);
+        fileOut.close();
+        workbook.close();
+        
+        JOptionPane.showMessageDialog(this, "Data berhasil diexport ke file DataPegawai.xlsx!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat export: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_bt_exportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -294,6 +365,7 @@ public class Mainpage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_edit;
+    private javax.swing.JButton bt_export;
     private javax.swing.JButton bt_hapus;
     private javax.swing.JButton bt_refresh;
     private javax.swing.JButton jButton1;
@@ -350,6 +422,10 @@ public class Mainpage extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void exportDataToExcel() {
+        
     }
 
 }
