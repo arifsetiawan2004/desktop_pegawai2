@@ -33,7 +33,6 @@ public class login_form extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lb_exit = new javax.swing.JLabel();
         lb_gambar = new javax.swing.JLabel();
         lb_username = new javax.swing.JLabel();
         lb_password = new javax.swing.JLabel();
@@ -45,8 +44,6 @@ public class login_form extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        lb_exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_cancel_30px.png"))); // NOI18N
 
         lb_gambar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/3094352.jpg"))); // NOI18N
 
@@ -82,9 +79,6 @@ public class login_form extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(564, 564, 564)
-                .addComponent(lb_exit))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(49, 49, 49)
@@ -101,13 +95,13 @@ public class login_form extends javax.swing.JFrame {
                             .addComponent(f_password, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(bt_login, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(12, 12, 12)))
-                .addComponent(lb_gambar))
+                .addComponent(lb_gambar)
+                .addGap(17, 17, 17))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(lb_exit)
-                .addGap(30, 30, 30)
+                .addGap(60, 60, 60)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -207,7 +201,6 @@ public class login_form extends javax.swing.JFrame {
     private javax.swing.JPasswordField f_password;
     private javax.swing.JTextField f_username;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lb_exit;
     private javax.swing.JLabel lb_gambar;
     private javax.swing.JLabel lb_password;
     private javax.swing.JLabel lb_username;

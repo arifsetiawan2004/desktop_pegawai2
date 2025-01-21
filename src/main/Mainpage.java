@@ -47,6 +47,8 @@ public class Mainpage extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -58,19 +60,37 @@ public class Mainpage extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelDataPegawai = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(102, 255, 204));
+        jPanel1.setPreferredSize(new java.awt.Dimension(684, 60));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_user_groups_50px_2.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+
+        jLabel2.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        jLabel2.setText("KEPEGAWAIAN");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 684, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(138, 138, 138)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(235, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
@@ -184,23 +204,10 @@ public class Mainpage extends javax.swing.JFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 397, Short.MAX_VALUE)
+            .addGap(0, 365, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("tab2", jPanel6);
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 684, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 397, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("tab3", jPanel7);
+        jTabbedPane1.addTab("Riwayat", jPanel6);
 
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -277,50 +284,50 @@ public class Mainpage extends javax.swing.JFrame {
     private void bt_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_exportActionPerformed
         try {
             // Membuka dialog JFileChooser untuk memilih lokasi penyimpanan file
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Pilih Lokasi Penyimpanan");
-        fileChooser.setSelectedFile(new java.io.File("DataPegawai.xlsx"));
-        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Excel Files", "xlsx"));
-        
-        // Menampilkan dialog dan mendapatkan status pilihan
-        int userSelection = fileChooser.showSaveDialog(this);
-        
-        if (userSelection != JFileChooser.APPROVE_OPTION) {
-            // Jika pengguna membatalkan atau menutup dialog
-            return;
-        }
-        
-        // Mendapatkan lokasi dan nama file yang dipilih pengguna
-        java.io.File fileToSave = fileChooser.getSelectedFile();
-        
-        org.apache.poi.ss.usermodel.Workbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook();
-        org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("Data Pegawai");
-        
-        // Buat header untuk kolom
-        org.apache.poi.ss.usermodel.Row headerRow = sheet.createRow(0);
-        String[] headers = {"NIP", "Nama Pegawai", "Alamat", "No. HP"};
-        for (int i = 0; i < headers.length; i++) {
-            org.apache.poi.ss.usermodel.Cell cell = headerRow.createCell(i);
-            cell.setCellValue(headers[i]);
-        }
-        
-        // Ambil data dari tabel dan isi ke file Excel
-        DefaultTableModel model = (DefaultTableModel) tabelDataPegawai.getModel();
-        for (int row = 0; row < model.getRowCount(); row++) {
-            org.apache.poi.ss.usermodel.Row dataRow = sheet.createRow(row + 1);
-            for (int col = 1; col < model.getColumnCount(); col++) {
-                org.apache.poi.ss.usermodel.Cell cell = dataRow.createCell(col -1);
-                cell.setCellValue(model.getValueAt(row, col).toString());
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Pilih Lokasi Penyimpanan");
+            fileChooser.setSelectedFile(new java.io.File("DataPegawai.xlsx"));
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Excel Files", "xlsx"));
+
+            // Menampilkan dialog dan mendapatkan status pilihan
+            int userSelection = fileChooser.showSaveDialog(this);
+
+            if (userSelection != JFileChooser.APPROVE_OPTION) {
+                // Jika pengguna membatalkan atau menutup dialog
+                return;
             }
-        }
-        
-        // Simpan file Excel
-        java.io.FileOutputStream fileOut = new java.io.FileOutputStream(fileToSave);
-        workbook.write(fileOut);
-        fileOut.close();
-        workbook.close();
-        
-        JOptionPane.showMessageDialog(this, "Data berhasil diexport ke file DataPegawai.xlsx!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+
+            // Mendapatkan lokasi dan nama file yang dipilih pengguna
+            java.io.File fileToSave = fileChooser.getSelectedFile();
+
+            org.apache.poi.ss.usermodel.Workbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook();
+            org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("Data Pegawai");
+
+            // Buat header untuk kolom
+            org.apache.poi.ss.usermodel.Row headerRow = sheet.createRow(0);
+            String[] headers = {"NIP", "Nama Pegawai", "Alamat", "No. HP"};
+            for (int i = 0; i < headers.length; i++) {
+                org.apache.poi.ss.usermodel.Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+            }
+
+            // Ambil data dari tabel dan isi ke file Excel
+            DefaultTableModel model = (DefaultTableModel) tabelDataPegawai.getModel();
+            for (int row = 0; row < model.getRowCount(); row++) {
+                org.apache.poi.ss.usermodel.Row dataRow = sheet.createRow(row + 1);
+                for (int col = 1; col < model.getColumnCount(); col++) {
+                    org.apache.poi.ss.usermodel.Cell cell = dataRow.createCell(col -1);
+                    cell.setCellValue(model.getValueAt(row, col).toString());
+                }
+            }
+
+            // Simpan file Excel
+            java.io.FileOutputStream fileOut = new java.io.FileOutputStream(fileToSave);
+            workbook.write(fileOut);
+            fileOut.close();
+            workbook.close();
+
+            JOptionPane.showMessageDialog(this, "Data berhasil diexport ke file DataPegawai.xlsx!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat export: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -369,11 +376,12 @@ public class Mainpage extends javax.swing.JFrame {
     private javax.swing.JButton bt_hapus;
     private javax.swing.JButton bt_refresh;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private static javax.swing.JTable tabelDataPegawai;
